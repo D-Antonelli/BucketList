@@ -16,24 +16,16 @@ struct ContentView: View {
         Text("Tap for file read / write")
             .onTapGesture {
                 let str = "Test message"
-                let url = getDocumentsDirectory().appendingPathComponent("message.txt")
                 
-                do {
-                    try str.write(to: url, atomically: true, encoding: .utf8)
+                FileManager.writeToDocumentDirectory(fileName: "example.txt", content: str)
                     
-                    let input = try String(contentsOf: url)
+                    let input = FileManager.readFromDocumentDirectory(fileName: "example.txt")
+                
                     print(input)
-                } catch {
-                    print(error.localizedDescription)
-                }
+                
             }
     }
     
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        
-        return paths[0]
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
