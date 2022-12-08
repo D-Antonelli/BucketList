@@ -10,18 +10,30 @@ import SwiftUI
 
 
 struct ContentView: View {
-
-    
+    private var fileName = "example.txt"
     var body: some View {
         Text("Tap for file read / write")
             .onTapGesture {
                 let str = "Test message"
                 
-                FileManager.writeToDocumentDirectory(fileName: "example.txt", content: str)
-                    
-                    let input = FileManager.readFromDocumentDirectory(fileName: "example.txt")
+                FileManager.writeDocument(fileName: fileName, content: str) {
+                    result in
+                    if let result = result {
+                        print(result.localizedDescription)
+                    }
+                }
                 
-                    print(input)
+                FileManager.readDocument(fileName: fileName) {
+                    result in
+                    
+                    switch result {
+                    case .success(let content):
+                        print(content)
+                    case .failure(let error):
+                        print(error)
+                    }
+                    
+                }
                 
             }
     }

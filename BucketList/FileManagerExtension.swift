@@ -12,23 +12,22 @@ extension FileManager {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
     
-    static func readFromDocumentDirectory(fileName: String) -> String {
+    static func readDocument(fileName: String, completion: (Result<String, Error>)  -> Void) {
+        let fileURL = documentDirectory.appendingPathComponent(fileName)
         do {
-            let fileURL = documentDirectory.appendingPathComponent(fileName)
             let content = try String(contentsOf: fileURL)
-            return content
+            completion(.success(content))
         } catch {
-            print(error.localizedDescription)
+            completion(.failure(error))
         }
-        return ""
     }
     
-    static func writeToDocumentDirectory(fileName: String, content: String) {
+    static func writeDocument(fileName: String, content: String, completion: (Error?) -> Void) {
         do {
             let fileURL = documentDirectory.appendingPathComponent(fileName)
             try content.write(to: fileURL, atomically: true, encoding: .utf8)
         } catch {
-            print(error.localizedDescription)
+            completion(error)
         }
 
     }
