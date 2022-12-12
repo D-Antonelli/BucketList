@@ -7,64 +7,47 @@
 
 import SwiftUI
 import MapKit
+import LocalAuthentication
 
-struct Location: Identifiable {
-    let id = UUID()
-    let name: String
-    let coordinate: CLLocationCoordinate2D
-}
 
 struct ContentView: View {
-    @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.5, longitude: -0.12), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+    @State private var isUnlocked = false
     
-    let locations = [
-        Location(name: "Buckingham Palace", coordinate: CLLocationCoordinate2D(latitude: 51.501, longitude: -0.141)),
-        Location(name: "Tower of London", coordinate: CLLocationCoordinate2D(latitude: 51.508, longitude: -0.076))
-    ]
     
-    private var fileName = "example.txt"
     var body: some View {
-        NavigationView
-        {
-            Map(coordinateRegion: $mapRegion, annotationItems: locations) { location in
-                MapAnnotation(coordinate: location.coordinate) {
-                    NavigationLink {
-                        Text("\(location.name)")
-                    } label: {
-                        VStack {
-                            Circle()
-                                .stroke(.red, lineWidth: 3)
-                                .frame(width: 44, height: 44)
-                        }
-                    }
-                    
+            VStack {
+                if isUnlocked {
+                    Text("unlocked")
+                } else {
+                    Text("locked")
+                }
+        }
+        .onAppear(perform: authenticate)
+        
+    }
+    
+    func authenticate() {
+        let context = LAContext()
+        var error: NSError?
+        
+        // check whether biometric authentication is possible
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            // it's possible, go ahead and use it
+            let reason = "We need to unlock your data."
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                if success {
+                    isUnlocked = true
+                } else {
+                    print("there was a problem")
+                    // there was a problem
                 }
             }
-            .navigationTitle("London explorer")
+            
+        } else {
+            print("no biometrics")
+            // no biometrics
         }
-        //        Text("Tap for file read / write")
-        //            .onTapGesture {
-        //                let str = "Test message"
-        //
-        //                FileManager.writeDocument(fileName: fileName, content: str) {
-        //                    result in
-        //                    if let result = result {
-        //                        print(result.localizedDescription)
-        //                    }
-        //                }
-        //
-        //                FileManager.readDocument(fileName: fileName) {
-        //                    result in
-        //                    switch result {
-        //                    case .success(let content):
-        //                        print(content)
-        //                    case .failure(let error):
-        //                        print(error)
-        //                    }
-        //
-        //                }
-        //
-        //            }
     }
     
 }
