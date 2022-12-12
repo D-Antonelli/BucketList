@@ -7,47 +7,45 @@
 
 import SwiftUI
 import MapKit
-import LocalAuthentication
 
 
 struct ContentView: View {
-    @State private var isUnlocked = false
-    
+    @State private var locations = [Location]()
+    @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 50, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 25, longitudeDelta: 25))
     
     var body: some View {
-            VStack {
-                if isUnlocked {
-                    Text("unlocked")
-                } else {
-                    Text("locked")
-                }
-        }
-        .onAppear(perform: authenticate)
-        
-    }
-    
-    func authenticate() {
-        let context = LAContext()
-        var error: NSError?
-        
-        // check whether biometric authentication is possible
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            // it's possible, go ahead and use it
-            let reason = "We need to unlock your data."
+        ZStack {
+            Map(coordinateRegion: $mapRegion, annotationItems: locations) {
+                location in
+                MapMarker(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
+            }
+                .ignoresSafeArea()
             
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
-                if success {
-                    isUnlocked = true
-                } else {
-                    print("there was a problem")
-                    // there was a problem
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button {
+                        let newLocation = Location(id: UUID(), name: "New location", description: "", latitude: mapRegion.center.latitude, longitude: mapRegion.center.longitude)
+                        locations.append(newLocation)
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .padding()
+                    .background(.black.opacity(0.75))
+                    .foregroundColor(.white)
+                    .font(.title)
+                    .clipShape(Circle())
+                    .padding(.trailing)
                 }
             }
             
-        } else {
-            print("no biometrics")
-            // no biometrics
+            Circle()
+                .fill(.blue)
+                .opacity(0.3)
+                .frame(width: 32, height: 32)
         }
+        
     }
     
 }
