@@ -61,7 +61,6 @@ struct ContentView: View {
                     .padding(.trailing)
                 }
             }
-            
         }
         .sheet(item: $selectedPlace) { place in
             EditView(location: place) { newLocation in
