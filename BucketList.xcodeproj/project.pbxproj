@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A0FD8DC294B1B74008578AF /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0FD8DB294B1B74008578AF /* EditView.swift */; };
 		8A786B1A2941DA7A00EC8A4B /* BucketListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A786B192941DA7A00EC8A4B /* BucketListApp.swift */; };
 		8A786B1C2941DA7A00EC8A4B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A786B1B2941DA7A00EC8A4B /* ContentView.swift */; };
 		8A786B1E2941DA7B00EC8A4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A786B1D2941DA7B00EC8A4B /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8A0FD8DB294B1B74008578AF /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		8A786B162941DA7A00EC8A4B /* BucketList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BucketList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A786B192941DA7A00EC8A4B /* BucketListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListApp.swift; sourceTree = "<group>"; };
 		8A786B1B2941DA7A00EC8A4B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				8A786B192941DA7A00EC8A4B /* BucketListApp.swift */,
 				8A786B1B2941DA7A00EC8A4B /* ContentView.swift */,
+				8A0FD8DB294B1B74008578AF /* EditView.swift */,
 				8A786B1D2941DA7B00EC8A4B /* Assets.xcassets */,
 				8A786B1F2941DA7B00EC8A4B /* Preview Content */,
 				8A786B2B2941F67D00EC8A4B /* FileManagerExtension.swift */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A786B1C2941DA7A00EC8A4B /* ContentView.swift in Sources */,
+				8A0FD8DC294B1B74008578AF /* EditView.swift in Sources */,
 				8A786B2C2941F67D00EC8A4B /* FileManagerExtension.swift in Sources */,
 				8AC76CB42947527D00F36394 /* Location.swift in Sources */,
 				8A786B1A2941DA7A00EC8A4B /* BucketListApp.swift in Sources */,
