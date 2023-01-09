@@ -11,6 +11,8 @@ import MapKit
 
 struct ContentView: View {
     @StateObject private var viewModel = ViewModel()
+    @State private var showError = false
+    @State private var errorMsg = ""
     
     var body: some View {
         if viewModel.isUnlocked {
@@ -57,7 +59,7 @@ struct ContentView: View {
                                 .padding(.trailing)
                             
                         }
- 
+                        
                     }
                 }
             }
@@ -71,6 +73,8 @@ struct ContentView: View {
                 viewModel.authenticate() { error in
                     if let error = error {
                         print(error.localizedDescription)
+                        showError = true
+                        errorMsg = error.localizedDescription
                     }
                 }
             }
@@ -78,7 +82,11 @@ struct ContentView: View {
             .background(.blue)
             .foregroundColor(.white)
             .clipShape(Capsule())
+            .alert(isPresented: $showError) {
+                Alert(title: Text("Error"), message: Text("\(errorMsg)"), dismissButton: .default(Text("OK")))
+            }
         }
+            
         
     }
     
