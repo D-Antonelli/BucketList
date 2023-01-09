@@ -49,13 +49,15 @@ struct ContentView: View {
                             viewModel.addLocation()
                         } label: {
                             Image(systemName: "plus")
+                                .padding()
+                                .background(.black.opacity(0.75))
+                                .foregroundColor(.white)
+                                .font(.title)
+                                .clipShape(Circle())
+                                .padding(.trailing)
+                            
                         }
-                        .padding()
-                        .background(.black.opacity(0.75))
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .clipShape(Circle())
-                        .padding(.trailing)
+ 
                     }
                 }
             }
@@ -66,13 +68,17 @@ struct ContentView: View {
             }
         } else {
             Button("Unlock Places") {
-                viewModel.authenticate()
+                viewModel.authenticate() { error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                }
             }
             .padding()
             .background(.blue)
             .foregroundColor(.white)
             .clipShape(Capsule())
-            }
+        }
         
     }
     

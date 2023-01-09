@@ -52,7 +52,7 @@ extension ContentView {
             save()
         }
         
-        func authenticate() {
+        func authenticate(completion: @escaping (Error?) -> Void) {
             let context = LAContext()
             var error: NSError?
             
@@ -65,11 +65,11 @@ extension ContentView {
                             self.isUnlocked = true
                         }
                     } else {
-                        // error
+                        completion(error)
                     }
                 }
             } else {
-                // no biometrics
+                completion(error)
             }
             
         }
