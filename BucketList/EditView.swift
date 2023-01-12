@@ -50,11 +50,8 @@ struct EditView: View {
             .navigationTitle("Place details")
             .toolbar {
                 Button("Save") {
-                    viewModel.save() { newLocation in
-                      onSave(newLocation)
-                      dismiss()
-                    }
-
+                    viewModel.save(onSave: onSave)
+                    dismiss()
                 }
 
             }
