@@ -15,7 +15,7 @@ extension EditView {
             case loading, loaded, failed
         }
         
-        @Published var location: Location
+        var location: Location
         @Published var name: String
         @Published var description: String
         

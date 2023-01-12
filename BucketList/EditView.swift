@@ -12,12 +12,12 @@ struct EditView: View {
     var location: Location
     var onSave: (Location) -> Void
     
-    @StateObject private var viewModel: StateObject<EditView.ViewModel>
+    @StateObject private var viewModel: ViewModel
     
     init(location: Location, onSave: @escaping (Location) -> Void) {
         self.location = location
         self.onSave = onSave
-        _viewModel = ViewModel(location: location)
+        _viewModel = .init(wrappedValue: ViewModel(location: location))
     }
     
     var body: some View {
